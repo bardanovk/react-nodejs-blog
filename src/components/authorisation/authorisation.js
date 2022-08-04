@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './authorisation.module.sass'
 import axios from "axios";
-import {useNavigate} from "react-router";
+import { useNavigate } from "react-router";
 
 
 const Authorization = () => {
@@ -26,6 +26,7 @@ const Authorization = () => {
     const [surnameDirty, setSurnameDirty] = useState(false);
     const [loginDirty, setLoginDirty] = useState(false);
 
+
     const [formValid, setFormValid] = useState(false);
 
     const [authorized, setAuthorized] = useState('false');
@@ -35,10 +36,10 @@ const Authorization = () => {
         } else {
             setFormValid(true)
         }
-    },[emailError, passwordError, nameError, surnameError, loginError])
+    }, [emailError, passwordError, nameError, surnameError, loginError])
 
-    const blurHandler = (e) =>  {
-        switch (e.target.name){
+    const blurHandler = (e) => {
+        switch (e.target.name) {
             case 'email':
                 setEmailDirty(true)
                 break
@@ -53,7 +54,9 @@ const Authorization = () => {
                 break
             case 'login':
                 setLoginDirty(true)
-                break
+                break;
+            default:
+                break;
         }
 
     };
@@ -64,11 +67,11 @@ const Authorization = () => {
             /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         if (!re.test(String(e.target.value).toLowerCase())) {
             setEmailError('некорректный e-mail')
-            if(!e.target.value){
+            if (!e.target.value) {
                 setEmailError('e-mail не может быть пустым!')
             }
         }
-        else{
+        else {
             setEmailError("")
         }
     }
@@ -76,10 +79,10 @@ const Authorization = () => {
         setPassword(e.target.value)
         if (e.target.value.length < 4) {
             setPasswordError('слишком короткий пароль!')
-            if(!e.target.value){
+            if (!e.target.value) {
                 setPasswordError('пароль не может быть пустым!')
             }
-        }else{
+        } else {
             setPasswordError("")
         }
     };
@@ -87,10 +90,10 @@ const Authorization = () => {
         setName(e.target.value)
         if (e.target.value.length < 2) {
             setNameError('слишком короткое имя!')
-            if(!e.target.value){
+            if (!e.target.value) {
                 setNameError('имя не может быть пустым!')
             }
-        }else{
+        } else {
             setNameError("")
         }
     };
@@ -98,10 +101,10 @@ const Authorization = () => {
         setSurname(e.target.value)
         if (e.target.value.length < 2) {
             setSurnameError('слишком короткая фамилия!')
-            if(!e.target.value){
+            if (!e.target.value) {
                 setSurnameError('фамилия не может быть пустой!')
             }
-        }else{
+        } else {
             setSurnameError("")
         }
     };
@@ -109,10 +112,10 @@ const Authorization = () => {
         setLogin(e.target.value)
         if (e.target.value.length < 4) {
             setLoginError('слишком короткий логин!')
-            if(!e.target.value){
+            if (!e.target.value) {
                 setLoginError('логин не может быть пустым!')
             }
-        }else{
+        } else {
             setLoginError("")
         }
     };
@@ -137,7 +140,7 @@ const Authorization = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`http://localhost:8080/api/user`, {name, surname, password, email, login})
+        axios.post(`http://localhost:8080/api/user`, { name, surname, password, email, login })
             .then(res => {
                 console.log(res);
                 console.log(res.data);
@@ -163,20 +166,20 @@ const Authorization = () => {
             <form>
                 <h1>Sign In</h1>
 
-                {(emailDirty && emailError) && <div className={s.error} style={{color: "red"}}>{emailError}</div>}
-                <input onChange={e => emailHandler(e) && handleChangeEmail} value={email} onBlur={e => blurHandler(e)} type="text" name="email" placeholder="Enter your e-mail"/>
+                {(emailDirty && emailError) && <div className={s.error} style={{ color: "red" }}>{emailError}</div>}
+                <input onChange={e => emailHandler(e) && handleChangeEmail} value={email} onBlur={e => blurHandler(e)} type="text" name="email" placeholder="Enter your e-mail" />
 
-                {(passwordDirty && passwordError) && <div className={s.error} style={{color: "red"}}>{passwordError}</div>}
-                <input onChange={e => passwordHandler(e) && handleChangePassword} value={password} onBlur={e => blurHandler(e)} type="password" name="password" placeholder="Enter your password"/>
+                {(passwordDirty && passwordError) && <div className={s.error} style={{ color: "red" }}>{passwordError}</div>}
+                <input onChange={e => passwordHandler(e) && handleChangePassword} value={password} onBlur={e => blurHandler(e)} type="password" name="password" placeholder="Enter your password" />
 
-                {(nameDirty && nameError) && <div className={s.error} style={{color: "red"}}>{nameError}</div>}
-                <input onChange={e => nameHandler(e) && handleChangeName} value={name} onBlur={e => blurHandler(e)} type="text" name="name" placeholder="Enter your name"/>
+                {(nameDirty && nameError) && <div className={s.error} style={{ color: "red" }}>{nameError}</div>}
+                <input onChange={e => nameHandler(e) && handleChangeName} value={name} onBlur={e => blurHandler(e)} type="text" name="name" placeholder="Enter your name" />
 
-                {(surnameDirty && surnameError) && <div className={s.error} style={{color: "red"}}>{surnameError}</div>}
-                <input onChange={e => surnameHandler(e) && handleChangeSurname} value={surname} onBlur={e => blurHandler(e)} type="text" name="surname" placeholder="Enter your surname"/>
+                {(surnameDirty && surnameError) && <div className={s.error} style={{ color: "red" }}>{surnameError}</div>}
+                <input onChange={e => surnameHandler(e) && handleChangeSurname} value={surname} onBlur={e => blurHandler(e)} type="text" name="surname" placeholder="Enter your surname" />
 
-                {(loginDirty && loginError) && <div className={s.error} style={{color: "red"}}>{loginError}</div>}
-                <input onChange={e => loginHandler(e) && handleChangeLogin} value={login} onBlur={e => blurHandler(e)} type="text" name="login" placeholder="Enter your login"/>
+                {(loginDirty && loginError) && <div className={s.error} style={{ color: "red" }}>{loginError}</div>}
+                <input onChange={e => loginHandler(e) && handleChangeLogin} value={login} onBlur={e => blurHandler(e)} type="text" name="login" placeholder="Enter your login" />
 
                 <button disabled={!formValid} type="submit" onClick={handleSubmit}>Sign In</button>
 
